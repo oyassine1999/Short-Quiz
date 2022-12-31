@@ -4,5 +4,4 @@ function updateQuestion() {
     console.log(i);
 }
 
-
 updateQuestion();
