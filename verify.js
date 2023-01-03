@@ -1,5 +1,0 @@
-function verify() {
-    
-}
-
-verify();
