@@ -7,7 +7,11 @@ const correct = [];
 var score = 0;
 
 // Start button click event listener
-document.getElementById('start-button').addEventListener('click', startQuiz);
+document.getElementById('start-button').addEventListener('click', function() {
+  getQuestions().then(function() {
+    startQuiz();
+  });
+});
 
 
 var timeLeft = 60;
@@ -66,7 +70,7 @@ function displayQuestion(questionIndex) {
   var question = questions[questionIndex];
   var options = answers[questionIndex];
 
-document.getElementById('score').textContent = "Current Score: " + score + "/10";
+  document.getElementById('score').textContent = "Current Score: " + score + "/10";
 
   // Update question text on screen
   document.getElementById('question').textContent = question;
@@ -83,7 +87,7 @@ document.getElementById('score').textContent = "Current Score: " + score + "/10"
     // Add click event listener to each option button
     optionButton.addEventListener('click', function(e) {
       // Check if answer is correct
-    console.log("CORRECT ANSWER", e.target.textContent, "USER INPUT", correct[questionIndex]);
+      console.log("CORRECT ANSWER", e.target.textContent, "USER INPUT", correct[questionIndex]);
       if (e.target.textContent === correct[questionIndex]) {
         // Move on to next question if correct
         if (questionIndex < questions.length - 1) {
@@ -94,6 +98,13 @@ document.getElementById('score').textContent = "Current Score: " + score + "/10"
           endQuiz();
         }
       } else {
+        // Move on to next question if answer is incorrect
+        if (questionIndex < questions.length - 1) {
+            displayQuestion(questionIndex + 1);
+        } else {
+          // End quiz if all questions have been answered
+          endQuiz();
+        }
         // Subtract time if answer is incorrect
         timeLeft -= 10;
       }
